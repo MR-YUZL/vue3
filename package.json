@@ -9,7 +9,11 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "less": "^4.0.0",
+    "less-loader": "^7.2.1",
+    "style-resources-loader": "^1.4.1",
+    "vue": "^3.0.0",
+    "vue-cli-plugin-style-resources-loader": "^0.1.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
