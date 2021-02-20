@@ -3,31 +3,63 @@
     <div class="header">啦啦啦</div>
     <div class="main"></div>
     <div class="footer">坎坎坷坷</div>
+    <input v-model="message" />
+    <h1 v-for="(v, index) in arr" :key="index">{{ v }}</h1>
   </div>
 </template>
 
 <script>
+import { ref, onMounted, watch, toRefs } from "vue";
+
 export default {
   name: "HelloWorld",
   props: {
     msg: String,
   },
-  mounted() {
-    let obj = {
-      a: 1,
+  setup(props) {
+    const { msg } = toRefs(props);
+
+    let arr = ref([]);
+    let arr2 = [];
+    let func = () => {
+      arr.value.push("o");
     };
-    let a = 2
-    Object.defineProperty(obj, "a", {
-      get: () => {
-        return a + 1;
-      },
-      set: (y) => {
-        y + 3;
-      },
+    onMounted(func);
+
+    // watch([arr, msg], ([arrNew, msgNew], [arrOld, msgOld]) => {
+    //   console.log("msgNew,msgOld", msgNew, msgOld, arrNew, arrOld);
+    // });
+    watch(msg, (msgNew, msgOld) => {
+      console.log("msgNew,msgOld", msgNew, msgOld);
+      func();
     });
-    console.log("obj", obj);
+    watch(arr, (arrNew) => {
+      console.log("arrNew", arrNew);
+    });
+    return { arr, arr2, func }; // 这里返回的任何内容都可以用于组件的其余部分
   },
-  methods: {},
+  watch: {
+    message: "onChange",
+    arr2() {
+      console.log("arr2");
+    },
+    arr() {
+      console.log("arr");
+    },
+  },
+  data() {
+    return {
+      message: "",
+    };
+  },
+  mounted() {
+    console.log("arr", this.arr);
+  },
+  methods: {
+    onChange() {
+      this.arr.push("l");
+    },
+  },
 };
 </script>
 
