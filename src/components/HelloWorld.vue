@@ -1,31 +1,48 @@
 <template>
   <div class="hello">
-    <div class="header">啦啦啦</div>
+    <!-- <div class="header">啦啦啦</div>
     <div class="main"></div>
-    <div class="footer">坎坎坷坷</div>
+    <div class="footer">坎坎坷坷</div> -->
+    <h1>{{ obj.a }}</h1>
     <input v-model="message" />
     <h1 v-for="(v, index) in arr" :key="index">{{ v }}</h1>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, watch, toRefs } from "vue";
+import {
+  ref,
+  onMounted,
+  watch,
+  toRefs,
+  reactive,
+  inject,
+  onUpdated,
+} from "vue";
 
 export default {
   name: "HelloWorld",
   props: {
     msg: String,
   },
+  inject: ["location", "geolocation"],
   setup(props) {
     const { msg } = toRefs(props);
-
+    const obj = ref({
+      a: "1",
+    });
     let arr = ref([]);
     let arr2 = [];
     let func = () => {
       arr.value.push("o");
     };
     onMounted(func);
+    let obj2 = "";
 
+    onUpdated(() => {
+      obj2 = inject("repositories");
+      console.log("obj2", obj2.value[0].name);
+    });
     // watch([arr, msg], ([arrNew, msgNew], [arrOld, msgOld]) => {
     //   console.log("msgNew,msgOld", msgNew, msgOld, arrNew, arrOld);
     // });
@@ -36,7 +53,8 @@ export default {
     watch(arr, (arrNew) => {
       console.log("arrNew", arrNew);
     });
-    return { arr, arr2, func }; // 这里返回的任何内容都可以用于组件的其余部分
+
+    return { obj, arr, arr2, func, obj2 }; // 这里返回的任何内容都可以用于组件的其余部分
   },
   watch: {
     message: "onChange",
@@ -50,14 +68,18 @@ export default {
   data() {
     return {
       message: "",
+      object: {
+        a: "",
+      },
     };
   },
   mounted() {
-    console.log("arr", this.arr);
+    console.log("obj2", this.obj2);
   },
   methods: {
     onChange() {
       this.arr.push("l");
+      this.obj.a = 111;
     },
   },
 };

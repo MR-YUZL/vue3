@@ -1,21 +1,26 @@
 <template>
-  <div>
-    <h1>hello world!</h1>
-    <test></test>
-    <message></message>
+  <div id="body" style="width: 100%">
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import test from "@/views/test";
-import message from "@/views/message";
-
 export default {
   name: "App",
-  components: {
-    test,
-    message,
+  components: {},
+  provide: {
+    location: "North Pole",
+    geolocation: {
+      longitude: 90,
+      latitude: 135,
+    },
   },
+  data() {
+    return {
+      type: 1,
+    };
+  },
+  mounted() {},
 };
 </script>
 
