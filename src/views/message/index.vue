@@ -3,14 +3,24 @@
     <a href="#one">one</a>
     <h1 ref="message">{{ id }}</h1>
     <Render :level="2">啦啦啦</Render>
-    <input type="text" v-model="id" />
+    <h1>{{ object }}</h1>
+    <input type="text" v-model="object" />
     <a-button>按钮</a-button>
+
+    <a-radio-group v-model:value="value1">
+      <a-radio-button value="a">Hangzhou</a-radio-button>
+      <a-radio-button value="b">Shanghai</a-radio-button>
+      <a-radio-button value="c">Beijing</a-radio-button>
+      <a-radio-button value="d">Chengdu</a-radio-button>
+    </a-radio-group>
+
     <!-- <router-link :to="{ path: `/test/${id}` }">跳转</router-link> -->
     <router-link :to="{ name: 'test', params: { id } }">跳转</router-link>
     <input ref="root" />
-    <teleport to="#body">
+    <teleport to="#app">
       <div style="width: 100%">A</div>
     </teleport>
+    <div>{{ `${imgList}` }}</div>
     <div class="container">
       <div v-for="v in imgList" :key="v.url">
         <img
@@ -28,8 +38,8 @@
   </div>
 </template>
 <script>
-import Render from "@/components/vue/Render";
-import { throttle, debounce } from "@/utils";
+import Render from "@/components/Render";
+import { throttle } from "@/utils";
 import { ref, onMounted } from "vue";
 export default {
   name: "message",
@@ -75,15 +85,31 @@ export default {
       ],
       scollFunc: null,
       imgs: [],
-      onClick: function () {
+      onClick: function() {
         console.log("this", this);
       },
+      that: this,
+      value1: "a",
     };
   },
   computed: {
     obj({ id }) {
-      console.log("e", id);
-      return "";
+      return id + "w";
+    },
+    object: {
+      get({ id }) {
+        console.log("id", id);
+        return id;
+      },
+      set(value) {
+        console.log("value", value);
+        this.id = value + "w";
+      },
+    },
+  },
+  watch: {
+    value1(val) {
+      console.log("val", val);
     },
   },
   created() {},
@@ -97,8 +123,16 @@ export default {
       // document
       //   .getElementById("message")
       //   .addEventListener("scroll", debounce.call(obj, this.inViewShow, 1000));
-      // this.onClick.call(obj);
+      this.onClick.call(obj);
+      console.log("that", this.that);
     });
+
+    let func = (a, ...arg) => {
+      console.log("a,b,c", a, arg);
+      return a, arg.push(a), arg[2];
+    };
+    let f = func(1, "aaa", 2);
+    console.log("f", f);
   },
   beforeUnmount() {
     // document
@@ -106,7 +140,7 @@ export default {
     //   .removeEventListener("scroll", this.inViewShow);
   },
   methods: {
-    scrollEvent: throttle(function () {
+    scrollEvent: throttle(function() {
       this.inViewShow();
     }, 1000),
     onerror(el) {
@@ -120,7 +154,6 @@ export default {
       for (let i = 0; i < len; i++) {
         let imageElement = imageElements[i];
         const rect = imageElement.getBoundingClientRect(); // 出现在视野的时候加载图片
-        console.log("rect", rect.top);
         if (
           rect.top < document.documentElement.clientHeight &&
           rect.bottom > 0
@@ -148,7 +181,7 @@ export default {
       width: 200px;
       height: 200px;
       background: #000;
-      // object-fit: cover;
+      object-fit: cover;
     }
   }
 }

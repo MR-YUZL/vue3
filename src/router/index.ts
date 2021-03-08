@@ -3,9 +3,9 @@ import {
     createWebHistory
 } from "vue-router";
 
-const routes = []
+const routes: Array<any> = []
 const routesFiles = require.context("./", true,
-    /^(?!\.\/index).*\.js$/)
+    /^(?!\.\/index).*\.ts$/)
 
 routesFiles.keys().forEach(filePath => {
     routes.push(...routesFiles(filePath).default)

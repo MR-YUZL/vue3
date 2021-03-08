@@ -3,7 +3,9 @@
     <h1>{{ msg }}</h1>
     <h1>{{ $route.params.id }}</h1>
     <input type="text" v-model="searchQuery" />
-    <HelloWorld :msg="msg"></HelloWorld>
+
+    <h1>{{ str1 }}</h1>
+    <HelloWorld :msg="msg" v-model:str="str1"></HelloWorld>
     <TableList :list="repositories" :headList="headList"></TableList>
     <a-button @click="onClick">跳转</a-button>
 
@@ -15,30 +17,30 @@
     </div>
   </div>
 </template>
-<script>
-import HelloWorld from "@/components/HelloWorld";
-import TableList from "@/components/vue/TableList";
-import filterList from "./js/filterList";
-import getList from "./js/getList";
-import { toRefs, watch, onUpdated, reactive, provide, readonly } from "vue";
+<script lang="ts">
+import HelloWorld from "@/components/HelloWorld.vue";
+import TableList from "@/components/TableList.vue";
+import filterList from "./hooks/filterList";
+import getList from "./hooks/getList";
+import { watch, onUpdated, reactive, provide, toRefs } from "vue";
 
 const state = reactive({
   count: 0,
 });
+
 export default {
   name: "test",
   components: { HelloWorld, TableList },
-  inject: ["location", "geolocation"],
   props: {
-    type: {
+    typer: {
       type: Number,
       default: 1,
     },
   },
   setup(props) {
-    const { type } = toRefs(props); //为了解构时保持数据的响应性
+    const { typer } = toRefs(props); //为了解构时保持数据的响应性
 
-    const { repositories, getUserRepositories } = getList(type);
+    const { repositories, getUserRepositories } = getList({ typer });
 
     const { searchQuery, repositoriesMatchingSearchQuery } = filterList(
       repositories
@@ -64,23 +66,28 @@ export default {
       searchQuery,
     };
   },
-  watch: {},
   data() {
     return {
+      str1: "",
       msg: "Hello world!",
       headList: ["姓名", "电话"],
     };
+  },
+  watch: {
+    str1(val: string) {
+      console.log("val", val);
+    },
   },
   created() {},
   mounted() {
     state.count++;
     console.log("state.count", state.count);
-    console.log("location", this.location);
-    console.log("router", this.$route);
+    console.log("route", this.$route);
   },
   methods: {
-    onClick() {
-      this.$router.push("/");
+    onClick(): void {
+      let router: any = this.$router;
+      router.push("/");
     },
   },
 };
