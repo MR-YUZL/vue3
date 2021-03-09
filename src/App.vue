@@ -1,14 +1,16 @@
 <template>
-  <router-view></router-view>
+  <ConfigProvider>
+    <router-view></router-view>
+  </ConfigProvider>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import HelloWorld from "./components/HelloWorld.vue";
+import { ConfigProvider } from "ant-design-vue";
 
 @Options({
   components: {
-    HelloWorld,
+    ConfigProvider,
   },
 })
 export default class App extends Vue {}
@@ -16,11 +18,7 @@ export default class App extends Vue {}
 
 <style lang="less">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  height: 100%;
 }
 </style>

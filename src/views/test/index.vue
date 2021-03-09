@@ -7,7 +7,7 @@
     <h1>{{ str1 }}</h1>
     <HelloWorld :msg="msg" v-model:str="str1"></HelloWorld>
     <TableList :list="repositories" :headList="headList"></TableList>
-    <a-button @click="onClick">跳转</a-button>
+    <button @click="onClick">跳转</button>
 
     <div class="g-container">
       <div class="g-real-box">
@@ -82,12 +82,12 @@ export default {
   mounted() {
     state.count++;
     console.log("state.count", state.count);
-    console.log("route", this.$route);
+    console.log("route111111", this.$route);
   },
   methods: {
     onClick(): void {
       let router: any = this.$router;
-      router.push("/");
+      router.push("/?index=1");
     },
   },
 };

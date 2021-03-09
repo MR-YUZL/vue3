@@ -1,18 +1,19 @@
 import {
-    createRouter,
-    createWebHistory
+  createRouter,
+  // createWebHistory
+  createWebHashHistory,
 } from "vue-router";
 
-const routes: Array<any> = []
-const routesFiles = require.context("./", true,
-    /^(?!\.\/index).*\.ts$/)
+const routes: Array<any> = [];
+const routesFiles = require.context("./", true, /^(?!\.\/index).*\.ts$/);
 
-routesFiles.keys().forEach(filePath => {
-    routes.push(...routesFiles(filePath).default)
-})
+routesFiles.keys().forEach((filePath) => {
+  routes.push(...routesFiles(filePath).default);
+});
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
-})
+  // history: createWebHistory(),
+  history: createWebHashHistory(),
+  routes,
+});
 
-export default router
+export default router;

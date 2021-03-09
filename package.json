@@ -13,10 +13,12 @@
     "less": "^2.7.3",
     "less-loader": "^5.0.0",
     "style-resources-loader": "^1.4.1",
+    "typescript": "^4.2.3",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-cli-plugin-style-resources-loader": "^0.1.4",
-    "vue-router": "^4.0.4"
+    "vue-router": "^4.0.4",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",

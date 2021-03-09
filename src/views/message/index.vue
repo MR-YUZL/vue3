@@ -5,17 +5,19 @@
     <Render :level="2">啦啦啦</Render>
     <h1>{{ object }}</h1>
     <input type="text" v-model="object" />
-    <a-button>按钮</a-button>
+    <Button>按钮</Button>
 
-    <a-radio-group v-model:value="value1">
-      <a-radio-button value="a">Hangzhou</a-radio-button>
-      <a-radio-button value="b">Shanghai</a-radio-button>
-      <a-radio-button value="c">Beijing</a-radio-button>
-      <a-radio-button value="d">Chengdu</a-radio-button>
-    </a-radio-group>
+    <Radio v-model:value="value1">
+      <RadioButton value="a">Hangzhou</RadioButton>
+      <RadioButton value="b">Shanghai</RadioButton>
+      <RadioButton value="c">Beijing</RadioButton>
+      <RadioButton value="d">Chengdu</RadioButton>
+    </Radio>
 
     <!-- <router-link :to="{ path: `/test/${id}` }">跳转</router-link> -->
-    <router-link :to="{ name: 'test', params: { id } }">跳转</router-link>
+    <!-- <router-link :to="{ name: 'test', params: { id } }">跳转</router-link> -->
+    <router-link :to="{ path: '/test/message?disable=true' }">跳转</router-link>
+
     <input ref="root" />
     <teleport to="#app">
       <div style="width: 100%">A</div>
@@ -38,13 +40,14 @@
   </div>
 </template>
 <script>
+import { Button, Radio } from "ant-design-vue";
 import Render from "@/components/Render";
 import { throttle } from "@/utils";
 import { ref, onMounted } from "vue";
 export default {
   name: "message",
   props: {},
-  components: { Render },
+  components: { Render, Button, Radio: Radio.Group, RadioButton: Radio.Button },
   setup() {
     const root = ref(null);
 
@@ -115,10 +118,10 @@ export default {
   created() {},
   mounted() {
     this.root.focus();
+    let obj = {
+      a: "",
+    };
     this.$nextTick(() => {
-      let obj = {
-        a: "",
-      };
       this.inViewShow();
       // document
       //   .getElementById("message")
@@ -132,7 +135,8 @@ export default {
       return a, arg.push(a), arg[2];
     };
     let f = func(1, "aaa", 2);
-    console.log("f", f);
+    let arr = [{ name: "name", number: "21312412" }];
+    console.log("obj", JSON.stringify(obj));
   },
   beforeUnmount() {
     // document
