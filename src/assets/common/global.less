@@ -92,17 +92,14 @@ p {
   float: right;
 }
 
-.l-h-32 {
-  line-height: 32px;
+.lineHeight(@n,@i:12) when(@i<=@n) {
+  .lh-@{i} {
+    line-height: unit(@i, px);
+  }
+  .lineHeight(@n, (@i+2));
 }
 
-.l-h-22 {
-  line-height: 22px;
-}
-
-.l-h-40 {
-  line-height: 40px;
-}
+.lineHeight(40);
 
 .clearfix:after {
   content: ".";
@@ -157,6 +154,10 @@ p {
 .padding(30);
 .margin(30);
 
+.cfff {
+  color: #fff;
+}
+
 .c999 {
   color: #999;
 }
@@ -169,7 +170,7 @@ p {
   color: #666;
 }
 
-.cblack {
+.c000 {
   color: #000;
 }
 
@@ -177,25 +178,32 @@ p {
   color: #1890ff;
 }
 
-.f-s-12 {
-  font-size: 12px;
+.font(@n,@i:12) when (@i<=@n) {
+  .fs-p-@{i} {
+    font-size: unit(@i, px);
+  }
+  .font(@n, @i+1);
 }
 
-.f-s-13 {
-  font-size: 13px;
+.font(24);
+
+.fontR(@n,@i:1) when (@i<=@n) {
+  .fs-r-@{i} {
+    font-size: unit(@i * 0.25, rem);
+  }
+  .fontR(@n, @i+1);
 }
 
-.f-s-14 {
-  font-size: 14px;
+.fontR(10);
+
+.fontWeight(@n,@i:1) when (@i<=@n) {
+  .fw-@{i} {
+    font-weight: unit(@i*100);
+  }
+  .fontWeight(@n, @i+1);
 }
 
-.f-s-15 {
-  font-size: 15px;
-}
-
-.f-s-16 {
-  font-size: 16px;
-}
+.fontWeight(7);
 
 h1,
 h2,
@@ -213,6 +221,11 @@ h6 {
 
 .flex {
   display: flex;
+}
+
+.flex-y {
+  display: flex;
+  flex-direction: column;
 }
 
 .flex-around {
@@ -240,15 +253,58 @@ h6 {
   margin-bottom: auto;
 }
 
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
+.marginR(@n,@i:1) when (@i<=@n) {
+  .mt-@{i} {
+    margin-top: unit(@i*0.25, rem);
+  }
+  .mb-@{i} {
+    margin-bottom: unit(@i*0.25, rem);
+  }
+  .ml-@{i} {
+    margin-left: unit(@i*0.25, rem);
+  }
+  .mr-@{i} {
+    margin-right: unit(@i*0.25, rem);
+  }
+  .mx-@{i} {
+    margin-top: unit(@i*0.25, rem);
+    margin-bottom: unit(@i*0.25, rem);
+  }
+  .my-@{i} {
+    margin-left: unit(@i*0.25, rem);
+    margin-right: unit(@i*0.25, rem);
+  }
+
+  .marginR(@n, @i+1);
 }
 
-.py-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+.marginR(10);
+
+.paddingR(@n,@i:1)when(@i<=@n) {
+  .px-@{i} {
+    padding-left: unit(@i*0.25, rem); //16px
+    padding-right: unit(@i*0.25, rem);
+  }
+  .py-@{i} {
+    padding-top: unit(@i*0.25, rem); //16px
+    padding-bottom: unit(@i*0.25, rem);
+  }
+  .pt-@{i} {
+    padding-top: unit(@i*0.25, rem); //16px
+  }
+  .pb-@{i} {
+    padding-bottom: unit(@i*0.25, rem); //16px
+  }
+  .pl-@{i} {
+    padding-left: unit(@i*0.25, rem); //16px
+  }
+  .pr-@{i} {
+    padding-right: unit(@i*0.25, rem); //16px
+  }
+  .paddingR(@n, @i+1);
 }
+
+.paddingR(10);
 
 .w-half {
   width: 50%;
@@ -292,10 +348,6 @@ h6 {
   overflow-y: auto;
 }
 
-.shadow-mixin() {
-  box-shadow: 0 0 10px #e2e2e2;
-}
-
 .relative {
   position: relative;
 }
@@ -306,4 +358,18 @@ h6 {
 
 .h-full {
   height: 100%;
+}
+
+.enter-x {
+  animation: enter-x-animation 0.4s ease-in-out 0.3s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+@keyframes enter-x-animation {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
